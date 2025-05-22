@@ -6,6 +6,7 @@ import (
 
 	pb "github.com/tiagodread/grpc-tickets/pkg/services/calculator"
 
+	"github.com/tiagodread/grpc-tickets/services/calculator/internal/client"
 	"github.com/tiagodread/grpc-tickets/services/calculator/internal/handler"
 	"github.com/tiagodread/grpc-tickets/services/calculator/internal/service"
 	"google.golang.org/grpc"
@@ -19,7 +20,13 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 
-	calculadoraService := service.NewCalculatorService()
+	factorsClient, err := client.NewFactorClient("localhost:50052")
+	if err != nil {
+		log.Fatalf("failed to create factor client: %v", err)
+	}
+	defer factorsClient.Close()
+
+	calculadoraService := service.NewCalculatorService(factorsClient)
 	calculadoraHandler := handler.NewCalculadoraHandler(calculadoraService)
 
 	pb.RegisterCalculatorServiceServer(grpcServer, calculadoraHandler)

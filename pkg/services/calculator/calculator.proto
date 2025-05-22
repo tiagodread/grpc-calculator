@@ -13,6 +13,7 @@ service CalculatorService {
 message Request {
   int32 a = 1;
   int32 b = 2;
+  string source = 3;
 }
 
 message Response {

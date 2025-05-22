@@ -1,5 +1,6 @@
 proto:
 	protoc --go_out=pkg --go-grpc_out=pkg pkg/services/calculator/calculator.proto
+	protoc --go_out=pkg --go-grpc_out=pkg pkg/services/factors/factors.proto
 
 mocks:
 	mockgen \

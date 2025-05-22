@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package factors;
+option go_package = "services/factors";
+
+
+service FactorsService {
+  rpc GetFactor (FactorRequest) returns (FactorResponse);
+}
+
+message FactorRequest {
+  string source = 1;
+}
+
+message FactorResponse {
+  int32 value = 1;
+}

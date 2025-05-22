@@ -18,22 +18,23 @@ func TestSumHandler_Success(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Sum(gomock.Any(), int32(1), int32(2)).
-		Return(int32(3), nil)
+		Sum(gomock.Any(), int32(1), int32(2), "BONUS").
+		Return(int32(5), nil)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Sum(ctx, &req)
 
 	// assert
 	assert.NoError(t, err)
-	assert.Equal(t, int32(3), resp.Result)
+	assert.Equal(t, int32(5), resp.Result)
 
 }
 
@@ -45,15 +46,16 @@ func TestSumHandler_Error(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Sum(gomock.Any(), int32(1), int32(2)).
+		Sum(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(0), assert.AnError)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Sum(ctx, &req)
@@ -71,23 +73,25 @@ func TestSubtractHandler_Success(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Subtract(gomock.Any(), int32(1), int32(2)).
-		Return(int32(-1), nil)
+		Subtract(gomock.Any(), int32(1), int32(2), "BONUS").
+		Return(int32(1), nil)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Subtract(ctx, &req)
 
 	// assert
 	assert.NoError(t, err)
-	assert.Equal(t, int32(-1), resp.Result)
+	assert.Equal(t, int32(1), resp.Result)
 }
+
 func TestSubtractHandler_Error(t *testing.T) {
 	// arrange
 	ctrl := gomock.NewController(t)
@@ -96,15 +100,16 @@ func TestSubtractHandler_Error(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Subtract(gomock.Any(), int32(1), int32(2)).
+		Subtract(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(0), assert.AnError)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Subtract(ctx, &req)
@@ -113,6 +118,7 @@ func TestSubtractHandler_Error(t *testing.T) {
 	assert.Error(t, err)
 	assert.Nil(t, resp)
 }
+
 func TestMultiplyHandler_Success(t *testing.T) {
 	// arrange
 	ctrl := gomock.NewController(t)
@@ -121,15 +127,16 @@ func TestMultiplyHandler_Success(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Multiply(gomock.Any(), int32(1), int32(2)).
+		Multiply(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(2), nil)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Multiply(ctx, &req)
@@ -146,15 +153,16 @@ func TestMultiplyHandler_Error(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Multiply(gomock.Any(), int32(1), int32(2)).
+		Multiply(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(0), assert.AnError)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Multiply(ctx, &req)
@@ -171,15 +179,16 @@ func TestDivideHandler_Success(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Divide(gomock.Any(), int32(1), int32(2)).
+		Divide(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(0), nil)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Divide(ctx, &req)
@@ -196,15 +205,16 @@ func TestDivideHandler_Error(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Divide(gomock.Any(), int32(1), int32(2)).
+		Divide(gomock.Any(), int32(1), int32(2), "BONUS").
 		Return(int32(0), assert.AnError)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 2,
+		A:      1,
+		B:      2,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Divide(ctx, &req)
@@ -213,6 +223,7 @@ func TestDivideHandler_Error(t *testing.T) {
 	assert.Error(t, err)
 	assert.Nil(t, resp)
 }
+
 func TestDivideByZeroHandler_Error(t *testing.T) {
 	// arrange
 	ctrl := gomock.NewController(t)
@@ -221,15 +232,16 @@ func TestDivideByZeroHandler_Error(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Divide(gomock.Any(), int32(1), int32(0)).
+		Divide(gomock.Any(), int32(1), int32(0), "BONUS").
 		Return(int32(0), assert.AnError)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 0,
+		A:      1,
+		B:      0,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Divide(ctx, &req)
@@ -246,15 +258,16 @@ func TestDivideByZeroHandler_Success(t *testing.T) {
 	ctx := context.Background()
 	mockCalculatorService := mocks.NewMockCalculatorService(ctrl)
 	mockCalculatorService.EXPECT().
-		Divide(gomock.Any(), int32(1), int32(0)).
+		Divide(gomock.Any(), int32(1), int32(0), "BONUS").
 		Return(int32(0), nil)
 
 	h := NewCalculadoraHandler(mockCalculatorService)
 
 	// act
 	req := pb.Request{
-		A: 1,
-		B: 0,
+		A:      1,
+		B:      0,
+		Source: "BONUS",
 	}
 
 	resp, err := h.Divide(ctx, &req)

@@ -13,6 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	factors "github.com/tiagodread/grpc-tickets/pkg/services/factors"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -41,61 +42,100 @@ func (m *MockCalculatorService) EXPECT() *MockCalculatorServiceMockRecorder {
 }
 
 // Divide mocks base method.
-func (m *MockCalculatorService) Divide(ctx context.Context, a, b int32) (int32, error) {
+func (m *MockCalculatorService) Divide(ctx context.Context, a, b int32, source string) (int32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Divide", ctx, a, b)
+	ret := m.ctrl.Call(m, "Divide", ctx, a, b, source)
 	ret0, _ := ret[0].(int32)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Divide indicates an expected call of Divide.
-func (mr *MockCalculatorServiceMockRecorder) Divide(ctx, a, b any) *gomock.Call {
+func (mr *MockCalculatorServiceMockRecorder) Divide(ctx, a, b, source any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Divide", reflect.TypeOf((*MockCalculatorService)(nil).Divide), ctx, a, b)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Divide", reflect.TypeOf((*MockCalculatorService)(nil).Divide), ctx, a, b, source)
 }
 
 // Multiply mocks base method.
-func (m *MockCalculatorService) Multiply(ctx context.Context, a, b int32) (int32, error) {
+func (m *MockCalculatorService) Multiply(ctx context.Context, a, b int32, source string) (int32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Multiply", ctx, a, b)
+	ret := m.ctrl.Call(m, "Multiply", ctx, a, b, source)
 	ret0, _ := ret[0].(int32)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Multiply indicates an expected call of Multiply.
-func (mr *MockCalculatorServiceMockRecorder) Multiply(ctx, a, b any) *gomock.Call {
+func (mr *MockCalculatorServiceMockRecorder) Multiply(ctx, a, b, source any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Multiply", reflect.TypeOf((*MockCalculatorService)(nil).Multiply), ctx, a, b)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Multiply", reflect.TypeOf((*MockCalculatorService)(nil).Multiply), ctx, a, b, source)
 }
 
 // Subtract mocks base method.
-func (m *MockCalculatorService) Subtract(ctx context.Context, a, b int32) (int32, error) {
+func (m *MockCalculatorService) Subtract(ctx context.Context, a, b int32, source string) (int32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Subtract", ctx, a, b)
+	ret := m.ctrl.Call(m, "Subtract", ctx, a, b, source)
 	ret0, _ := ret[0].(int32)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Subtract indicates an expected call of Subtract.
-func (mr *MockCalculatorServiceMockRecorder) Subtract(ctx, a, b any) *gomock.Call {
+func (mr *MockCalculatorServiceMockRecorder) Subtract(ctx, a, b, source any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Subtract", reflect.TypeOf((*MockCalculatorService)(nil).Subtract), ctx, a, b)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Subtract", reflect.TypeOf((*MockCalculatorService)(nil).Subtract), ctx, a, b, source)
 }
 
 // Sum mocks base method.
-func (m *MockCalculatorService) Sum(ctx context.Context, a, b int32) (int32, error) {
+func (m *MockCalculatorService) Sum(ctx context.Context, a, b int32, source string) (int32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Sum", ctx, a, b)
+	ret := m.ctrl.Call(m, "Sum", ctx, a, b, source)
 	ret0, _ := ret[0].(int32)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Sum indicates an expected call of Sum.
-func (mr *MockCalculatorServiceMockRecorder) Sum(ctx, a, b any) *gomock.Call {
+func (mr *MockCalculatorServiceMockRecorder) Sum(ctx, a, b, source any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Sum", reflect.TypeOf((*MockCalculatorService)(nil).Sum), ctx, a, b)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Sum", reflect.TypeOf((*MockCalculatorService)(nil).Sum), ctx, a, b, source)
+}
+
+// MockFactorClient is a mock of FactorClient interface.
+type MockFactorClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockFactorClientMockRecorder
+	isgomock struct{}
+}
+
+// MockFactorClientMockRecorder is the mock recorder for MockFactorClient.
+type MockFactorClientMockRecorder struct {
+	mock *MockFactorClient
+}
+
+// NewMockFactorClient creates a new mock instance.
+func NewMockFactorClient(ctrl *gomock.Controller) *MockFactorClient {
+	mock := &MockFactorClient{ctrl: ctrl}
+	mock.recorder = &MockFactorClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockFactorClient) EXPECT() *MockFactorClientMockRecorder {
+	return m.recorder
+}
+
+// GetFactor mocks base method.
+func (m *MockFactorClient) GetFactor(ctx context.Context, source string) (*factors.FactorResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetFactor", ctx, source)
+	ret0, _ := ret[0].(*factors.FactorResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetFactor indicates an expected call of GetFactor.
+func (mr *MockFactorClientMockRecorder) GetFactor(ctx, source any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFactor", reflect.TypeOf((*MockFactorClient)(nil).GetFactor), ctx, source)
 }

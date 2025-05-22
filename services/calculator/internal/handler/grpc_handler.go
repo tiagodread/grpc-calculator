@@ -19,7 +19,7 @@ func NewCalculadoraHandler(s service.CalculatorService) *CalculadoraHandler {
 }
 
 func (h *CalculadoraHandler) Sum(ctx context.Context, in *pb.Request) (*pb.Response, error) {
-	result, err := h.calculadoraService.Sum(ctx, in.GetA(), in.GetB())
+	result, err := h.calculadoraService.Sum(ctx, in.GetA(), in.GetB(), in.GetSource())
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (h *CalculadoraHandler) Sum(ctx context.Context, in *pb.Request) (*pb.Respo
 }
 
 func (h *CalculadoraHandler) Subtract(ctx context.Context, in *pb.Request) (*pb.Response, error) {
-	result, err := h.calculadoraService.Subtract(ctx, in.GetA(), in.GetB())
+	result, err := h.calculadoraService.Subtract(ctx, in.GetA(), in.GetB(), in.GetSource())
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (h *CalculadoraHandler) Subtract(ctx context.Context, in *pb.Request) (*pb.
 }
 
 func (h *CalculadoraHandler) Divide(ctx context.Context, in *pb.Request) (*pb.Response, error) {
-	result, err := h.calculadoraService.Divide(ctx, in.GetA(), in.GetB())
+	result, err := h.calculadoraService.Divide(ctx, in.GetA(), in.GetB(), in.GetSource())
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (h *CalculadoraHandler) Divide(ctx context.Context, in *pb.Request) (*pb.Re
 }
 
 func (h *CalculadoraHandler) Multiply(ctx context.Context, in *pb.Request) (*pb.Response, error) {
-	result, err := h.calculadoraService.Multiply(ctx, in.GetA(), in.GetB())
+	result, err := h.calculadoraService.Multiply(ctx, in.GetA(), in.GetB(), in.GetSource())
 	if err != nil {
 		return nil, err
 	}

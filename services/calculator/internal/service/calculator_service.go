@@ -3,40 +3,66 @@ package service
 import (
 	"context"
 	"errors"
+
+	pb "github.com/tiagodread/grpc-tickets/pkg/services/factors"
 )
 
 type CalculatorService interface {
-	Sum(ctx context.Context, a, b int32) (int32, error)
-	Subtract(ctx context.Context, a, b int32) (int32, error)
-	Multiply(ctx context.Context, a, b int32) (int32, error)
-	Divide(ctx context.Context, a, b int32) (int32, error)
+	Sum(ctx context.Context, a, b int32, source string) (int32, error)
+	Subtract(ctx context.Context, a, b int32, source string) (int32, error)
+	Multiply(ctx context.Context, a, b int32, source string) (int32, error)
+	Divide(ctx context.Context, a, b int32, source string) (int32, error)
 }
 
-type calculatorServiceImpl struct{}
-
-func NewCalculatorService() CalculatorService {
-	return &calculatorServiceImpl{}
+type FactorClient interface {
+	GetFactor(ctx context.Context, source string) (*pb.FactorResponse, error)
 }
 
-func (c *calculatorServiceImpl) Sum(ctx context.Context, a, b int32) (int32, error) {
-	result := a + b
+type calculatorServiceImpl struct {
+	factorClient FactorClient
+}
+
+func NewCalculatorService(factorClient FactorClient) CalculatorService {
+	return &calculatorServiceImpl{
+		factorClient: factorClient,
+	}
+}
+
+func (c *calculatorServiceImpl) Sum(ctx context.Context, a, b int32, source string) (int32, error) {
+	factor, err := c.factorClient.GetFactor(ctx, source)
+	if err != nil {
+		return 0, err
+	}
+	result := a + b + factor.Value
 	return result, nil
 }
 
-func (c *calculatorServiceImpl) Divide(ctx context.Context, a int32, b int32) (int32, error) {
+func (c *calculatorServiceImpl) Divide(ctx context.Context, a int32, b int32, source string) (int32, error) {
 	if b == 0 {
 		return 0, errors.New("division by zero")
 	}
-	result := a / b
+	factor, err := c.factorClient.GetFactor(ctx, source)
+	if err != nil {
+		return 0, err
+	}
+	result := a/b + factor.Value
 	return result, nil
 }
 
-func (c *calculatorServiceImpl) Multiply(ctx context.Context, a int32, b int32) (int32, error) {
-	result := a * b
+func (c *calculatorServiceImpl) Multiply(ctx context.Context, a int32, b int32, source string) (int32, error) {
+	factor, err := c.factorClient.GetFactor(ctx, source)
+	if err != nil {
+		return 0, err
+	}
+	result := a*b + factor.Value
 	return result, nil
 }
 
-func (c *calculatorServiceImpl) Subtract(ctx context.Context, a int32, b int32) (int32, error) {
-	result := a - b
+func (c *calculatorServiceImpl) Subtract(ctx context.Context, a int32, b int32, source string) (int32, error) {
+	factor, err := c.factorClient.GetFactor(ctx, source)
+	if err != nil {
+		return 0, err
+	}
+	result := a - b + factor.Value
 	return result, nil
 }

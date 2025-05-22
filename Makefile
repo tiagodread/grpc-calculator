@@ -18,3 +18,9 @@ test:
 	@go test ./... -v --coverprofile=coverage.out
 	@go tool cover -html=coverage.out -o coverage.html
 	@echo "Tests completed."
+
+build:
+	@echo "Building the application..."
+	@go build -o calculator ./services/calculator/cmd/grpc/main.go
+	@echo "Build completed."
+	@echo "Executable: ./calculator"

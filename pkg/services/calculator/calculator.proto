@@ -1,4 +1,3 @@
-// api/soma.proto
 syntax = "proto3";
 
 package calculator;

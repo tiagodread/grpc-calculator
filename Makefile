@@ -21,6 +21,11 @@ test:
 
 build:
 	@echo "Building the application..."
-	@go build -o calculator ./services/calculator/cmd/grpc/main.go
+	GOOS=linux GOARCH=amd64 go build -o ./bin/calculator ./services/calculator/cmd/grpc/main.go
 	@echo "Build completed."
 	@echo "Executable: ./calculator"
+
+build-docker:
+	@echo "Building Docker image..."
+	docker build -t tiagodread/calculator:latest -f deployment/docker/calculator.dockerfile .
+	@echo "Docker image built successfully."
